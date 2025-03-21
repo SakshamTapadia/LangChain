@@ -1,23 +1,10 @@
-from langchain.llms import Bedrock
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+from langchain.schema.runnable import Runnable
 
-# Initialize the Bedrock LLM
-llm = Bedrock(
-    model_id="anthropic.claude-v2",
-    credentials_profile_name="default",
-    model_kwargs={"temperature": 0.7}
-)
+load_dotenv()
 
-# Create a prompt template
-prompt = PromptTemplate(
-    input_variables=["topic"],
-    template="Write a short paragraph about {topic}."
-)
+model = ChatOpenAI()
 
-# Create a chain
-chain = LLMChain(llm=llm, prompt=prompt)
-
-# Run the chain
-response = chain.run(topic="artificial intelligence")
-print(response)
+print(model.get_input_jsonschema())
+print(model.get_output_jsonschema())
